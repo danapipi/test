@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { BackHandler } from 'react-native'
 import {
   createReactNavigationReduxMiddleware,
-  reduxifyNavigator,
+  createReduxBoundAddListener,
 } from 'react-navigation-redux-helpers'
 import { connect } from 'react-redux'
 import { addNavigationHelpers, NavigationActions } from 'react-navigation'
@@ -13,8 +13,8 @@ export const navigationMiddleware = createReactNavigationReduxMiddleware(
   'root',
   state => state.navigation,
 )
-const addListener = reduxifyNavigator('root')
 
+const addListener = createReduxBoundAddListener('root')
 
 class RootView extends Component {
   componentDidMount() {

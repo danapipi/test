@@ -1,6 +1,6 @@
 import { all } from "redux-saga/effects";
-import getData from "./news";
+import getListNews from "./home";
 
 export default function* rootSaga() {
-  yield all([getData]);
+  yield all([getListNews]);
 }
