@@ -5,7 +5,8 @@ import {
   TouchableOpacity,
   FlatList,
   ActivityIndicator,
-  Dimensions
+  Dimensions,
+  ImageBackground
 } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -52,11 +53,21 @@ class Home extends Component {
           }}
         >
           <View>
-            <View style={{ flexDirection: "column" }}>
-              <Text>Author : </Text>
-              <Text>{item.author ? item.author : "NN"}</Text>
-              <Text>Title : </Text>
-              <Text>{item.title ? item.title : "No Title"}</Text>
+            <View>
+              <Text style={{ color: "#2d3436" }}>Author</Text>
+            </View>
+            <View>
+              <Text style={{ color: "#636e72" }}>
+                {item.author ? item.author : "NN"}
+              </Text>
+            </View>
+            <View>
+              <Text style={{ color: "#2d3436" }}>Title</Text>
+            </View>
+            <View>
+              <Text style={{ color: "#636e72" }}>
+                {item.title ? item.title : "No Title"}
+              </Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -68,34 +79,47 @@ class Home extends Component {
     const {
       dataNews: { isLoading, dataNews }
     } = this.props;
-    return (
-      <View style={styles.container}>
-        <CHeader />
-        <Text
-          style={{
-            justifyContent: "center",
-            alignSelf: "center",
-            color: "#3F51B5",
-            fontSize: 20,
-            marginVertical: 10
+    if (isLoading)
+      return (
+        <ImageBackground
+          source={{
+            uri:
+              "https://images.unsplash.com/photo-1459207982041-089ff95be891?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=aae95477e97e6cf27c8eee213ba9dbf5&auto=format&fit=crop&w=634&q=80"
           }}
+          style={{ flex: 1 }}
         >
-          Headline News
-        </Text>
-        {isLoading ? (
-          <ActivityIndicator size="large" color="#3F51B5" />
-        ) : (
-          <View style={{ height: Dimensions.get("window").height - 150 }}>
-            <FlatList
-              data={dataNews}
-              extraData={dataNews}
-              renderItem={this.renderItem}
-              keyExtractor={(item, index) => index.toString()}
-            />
-          </View>
-        )}
-      </View>
-    );
+          <ActivityIndicator color="white" size={50} />
+        </ImageBackground>
+      );
+    else
+      return (
+        <View style={styles.container}>
+          <CHeader />
+          <Text
+            style={{
+              justifyContent: "center",
+              alignSelf: "center",
+              color: "#3F51B5",
+              fontSize: 20,
+              marginVertical: 10
+            }}
+          >
+            Headline News
+          </Text>
+          {isLoading ? (
+            <ActivityIndicator size="large" color="#3F51B5" />
+          ) : (
+            <View style={{ height: Dimensions.get("window").height - 150 }}>
+              <FlatList
+                data={dataNews}
+                extraData={dataNews}
+                renderItem={this.renderItem}
+                keyExtractor={(item, index) => index.toString()}
+              />
+            </View>
+          )}
+        </View>
+      );
   }
 }
 
