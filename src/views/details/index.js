@@ -1,15 +1,5 @@
 import React, { Component } from "react";
-import {
-  View,
-  Text,
-  ActivityIndicator,
-  Image,
-  Dimensions,
-  ScrollView
-} from "react-native";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { homeActions } from "../../redux/module/home";
+import { View, Text, Image, Dimensions, ScrollView } from "react-native";
 import CHeader from "../header";
 import styles from "./styles";
 import Asset from "../../assets";
@@ -18,43 +8,35 @@ export default class Details extends Component {
   render() {
     const { data } = this.props.navigation.state.params;
     return (
-      <View style={{ backgroundColor: "white" }}>
+      <View style={styles.viewBg}>
         <CHeader />
-        <ScrollView style={{ height: Dimensions.get("window").height - 100 }}>
+        <ScrollView style={styles.scrollView}>
           {data.urlToImage ? (
             <Image
               source={{ uri: data.urlToImage }}
-              style={{
-                width: Dimensions.get("screen").width - 20,
-                height: Dimensions.get("screen").height / 2,
-                margin: 10
-              }}
+              style={styles.img1}
               borderRadius={10}
               resizeMode="cover"
             />
           ) : (
             <Image
               source={Asset.noImage}
-              style={{
-                width: Dimensions.get("screen").width - 20,
-                height: Dimensions.get("screen").height / 2,
-                margin: 10
-              }}
+              style={styles.img2}
               resizeMode="cover"
               borderRadius={10}
             />
           )}
-          <View style={{ margin: 15 }}>
-            <Text style={{ fontSize: 20, color: "#2d3436" }}>Title</Text>
-            <Text style={{ color: "#636e72" }}>
+          <View style={styles.view1}>
+            <Text style={styles.title1}>Title</Text>
+            <Text style={styles.textTitle}>
               {data.title ? data.title : "No Title"}{" "}
             </Text>
-            <Text style={{ fontSize: 20, color: "#2d3436" }}>Author</Text>
-            <Text style={{ color: "#636e72" }}>
+            <Text style={styles.author}>Author</Text>
+            <Text style={styles.textAuthor}>
               {data.author ? data.author : "NN"}{" "}
             </Text>
-            <Text style={{ fontSize: 20, color: "#2d3436" }}>Description</Text>
-            <Text style={{ color: "#636e72" }}>
+            <Text style={styles.desc}>Description</Text>
+            <Text style={styles.descColor}>
               {data.description ? data.description : "No Description"}{" "}
             </Text>
           </View>

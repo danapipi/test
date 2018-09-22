@@ -35,18 +35,17 @@ class Home extends Component {
     request();
   }
 
+  reload = () => {
+    const { request } = this.props;
+    request();
+  };
+
   // List Order
   renderItem = ({ item }) => {
     return (
-      <View style={{ margin: 10 }}>
+      <View style={styles.renderItemView}>
         <TouchableOpacity
-          style={{
-            borderRadius: 10,
-            borderWidth: 0.5,
-            padding: 10,
-            elevation: 1.5,
-            borderColor: "#3F51B5"
-          }}
+          style={styles.renderItemTouch}
           onPress={() => {
             const { navigation } = this.props;
             navigation.navigate("details", { data: item });
@@ -54,18 +53,18 @@ class Home extends Component {
         >
           <View>
             <View>
-              <Text style={{ color: "#2d3436" }}>Author</Text>
+              <Text style={styles.textAuthor}>Author</Text>
             </View>
             <View>
-              <Text style={{ color: "#636e72" }}>
+              <Text style={styles.textItemAuthor}>
                 {item.author ? item.author : "NN"}
               </Text>
             </View>
             <View>
-              <Text style={{ color: "#2d3436" }}>Title</Text>
+              <Text style={styles.textTitle}>Title</Text>
             </View>
             <View>
-              <Text style={{ color: "#636e72" }}>
+              <Text style={styles.textItemTitle}>
                 {item.title ? item.title : "No Title"}
               </Text>
             </View>
@@ -84,37 +83,29 @@ class Home extends Component {
         <ImageBackground
           source={{
             uri:
-              "https://images.unsplash.com/photo-1459207982041-089ff95be891?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=aae95477e97e6cf27c8eee213ba9dbf5&auto=format&fit=crop&w=634&q=80"
+              "https://images.unsplash.com/photo-1534322904425-1bca0e9211e8?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=13eca4d401fd7b5fac7239fb81671147&auto=format&fit=crop&w=665&q=80"
           }}
-          style={{ flex: 1 }}
+          style={styles.splash}
         >
-          <ActivityIndicator color="white" size={50} />
+          <ActivityIndicator color="#3F51B5" size={50} />
         </ImageBackground>
       );
     else
       return (
         <View style={styles.container}>
           <CHeader />
-          <Text
-            style={{
-              justifyContent: "center",
-              alignSelf: "center",
-              color: "#3F51B5",
-              fontSize: 20,
-              marginVertical: 10
-            }}
-          >
-            Headline News
-          </Text>
+          <Text style={styles.textHeadline}>Headline News</Text>
           {isLoading ? (
             <ActivityIndicator size="large" color="#3F51B5" />
           ) : (
-            <View style={{ height: Dimensions.get("window").height - 150 }}>
+            <View style={styles.viewFlatList}>
               <FlatList
                 data={dataNews}
                 extraData={dataNews}
                 renderItem={this.renderItem}
                 keyExtractor={(item, index) => index.toString()}
+                onRefresh={this.reload}
+                refreshing={false}
               />
             </View>
           )}
