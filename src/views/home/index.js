@@ -4,7 +4,8 @@ import {
   Text,
   TouchableOpacity,
   FlatList,
-  ActivityIndicator
+  ActivityIndicator,
+  Dimensions
 } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -35,19 +36,33 @@ class Home extends Component {
 
   // List Order
   renderItem = ({ item }) => {
-    console.warn("item", item);
     return (
-      <View>
-        <TouchableOpacity>
-          <Text>{item.author}</Text>
-          <Text>{item.title}</Text>
+      <View style={{ margin: 10 }}>
+        <TouchableOpacity
+          style={{
+            borderRadius: 10,
+            borderWidth: 0.5,
+            padding: 10,
+            elevation: 1.5,
+            borderColor: "#3F51B5"
+          }}
+          onPress={() => {
+            const { navigation } = this.props;
+            navigation.navigate("details", { data: item });
+          }}
+        >
+          <View>
+            <View style={{ flexDirection: "column" }}>
+              <Text>Author : </Text>
+              <Text>{item.author ? item.author : "NN"}</Text>
+              <Text>Title : </Text>
+              <Text>{item.title ? item.title : "No Title"}</Text>
+            </View>
+          </View>
         </TouchableOpacity>
       </View>
     );
   };
-
-  // Separator flat list
-  renderSeparator = () => <View style={styles.separator} />;
 
   render() {
     const {
@@ -56,16 +71,26 @@ class Home extends Component {
     return (
       <View style={styles.container}>
         <CHeader />
+        <Text
+          style={{
+            justifyContent: "center",
+            alignSelf: "center",
+            color: "#3F51B5",
+            fontSize: 20,
+            marginVertical: 10
+          }}
+        >
+          Headline News
+        </Text>
         {isLoading ? (
-          <ActivityIndicator size="large" color="#10ac84" />
+          <ActivityIndicator size="large" color="#3F51B5" />
         ) : (
-          <View>
+          <View style={{ height: Dimensions.get("window").height - 150 }}>
             <FlatList
               data={dataNews}
               extraData={dataNews}
               renderItem={this.renderItem}
               keyExtractor={(item, index) => index.toString()}
-              ItemSeparatorComponent={this.renderSeparator}
             />
           </View>
         )}

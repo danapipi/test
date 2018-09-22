@@ -5,6 +5,7 @@ import { bindActionCreators } from "redux";
 import { homeActions } from "../../redux/module/home";
 import { connect } from "react-redux";
 
+// This Will Getting State From Redux and Ditribute It Into Component Props
 const mapStateToProps = state => ({
   dataNews: state.home
 });
@@ -19,20 +20,18 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 class CHeader extends Component {
-  // This Will Getting State From Redux and Ditribute It Into Component Props
-
   search = text => {
     const {
       dataNews: { searchData }
     } = this.props;
-    console.warn("dataSearch", text);
     const dataSearch = searchData.filter(item => {
-      const itemData = `${item.author?item.author.toLowerCase():''} ${item.title.toLowerCase()}`;
+      const itemData = `${
+        item.author ? item.author.toLowerCase() : ""
+      } ${item.title.toLowerCase()}`;
       const textSearch = text.toLowerCase();
       return itemData.indexOf(textSearch) > -1;
     });
 
-    console.warn('aaaa',dataSearch);
     this.props.setData("dataNews", dataSearch);
   };
 
